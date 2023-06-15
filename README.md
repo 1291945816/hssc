@@ -7,10 +7,10 @@ introduction: **This is a task scheduling simulation platform for general hetero
 
 #### 第一阶段
 
-> 在该阶段主要负责完成基本的DAG图生成。
+> 在该阶段主要负责完成基本的DAG图生成、解析。
 
-- [ ] 分析网上的DAG生成代码，整理实现思路
-- [ ] DAG任务的构建生成
+- [x] 分析网上的DAG生成代码，整理实现思路
+- [x] DAG任务的构建生成
 - [ ] DAG任务的解析
 
 #### 第二阶段
