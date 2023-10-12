@@ -1,7 +1,8 @@
 > 参考论文：
 >
 > Topcuoglu H, Hariri S, Wu M Y. Performance-effective and low-complexity task scheduling for heterogeneous computing[J]. IEEE transactions on parallel and distributed systems, 2002, 13(3): 260-274.
-
+>
+>[获取论文](https://ieeexplore.ieee.org/document/993206)
 ### 输入参数（影响DAG图）
 
 - **v**：图中任务（Task）中数量
