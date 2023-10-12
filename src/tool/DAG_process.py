@@ -4,7 +4,6 @@ import os.path
 import random
 import numpy as np
 
-# todo 后续可以优化为从某一个配置文件中读取内容
 parser = argparse.ArgumentParser()
 parser.add_argument('--mode', default='default', type=str,
                     help="There are two ways to generate a DAG graph: default and custom. Customization requires "
@@ -23,20 +22,18 @@ parser.add_argument('--beta', default=0.1, type=float,
                     help="Range percentage of computation costs on processors")
 
 
-# 设置随机种子
-# random.seed(10)
-
-
 class GenerateDag:
-    def __init__(self, args):
+    def __init__(self, _v, _alpha, _max_out, _ccr, _p, _beta):
         self.__avg_w_dag = None  # 整个图中的平均计算开销
-        self.__v = args.v
-        self.__nodes = args.v  # 实际节点数目（用以构建文件名称）
-        self.__alpha = args.alpha
-        self.__max_out = args.max_out
-        self.__ccr = args.ccr
-        self.__p = args.p
-        self.__beta = args.beta
+
+        self.__v = _v
+        self.__nodes = _v  # 实际节点数目（用以构建文件名称）
+        self.__alpha = _alpha
+        self.__max_out = _max_out
+        self.__ccr = _ccr
+        self.__p = _p
+        self.__beta = _beta
+
         self.__created_start = False
         self.__created_end = False
 
@@ -173,7 +170,7 @@ class GenerateDag:
         comm_cost = random.randint(1, 2 * avg_cc - 1)
         return comm_cost
 
-    def dag_construct(self, file_path, index=0, min_value=5, max_value=20):
+    def dag_construct(self, file_path, index=0, min_value=20, max_value=100):
         """
         构架DAG图
         :param file_path: 生成的DAG数据集存放的目录（最后需要加入 /）
@@ -280,15 +277,68 @@ class GenerateDag:
         f.write("\n")
 
         for i in range(self.__v):
-            f.write(f"\tTask#{i}\t")
+            f.write(f" T#{i} \t\t")
             for j in range(self.__p):
                 f.write(f"{comp[i][j]}\t")
             f.write("\n")
         f.close()
 
 
+class ProcessDag:
+    @staticmethod
+    def get_input_list(filepath):
+        """
+        从文件路径获取图的输入列表
+        :param filepath: Dag图描述文件
+        :return: 一个列表 内容主要由四项构成 [任务节点数目，处理器数目，计算开销矩阵，通信开销矩阵]
+        """
+        # v = 0
+        # ccr = 0
+        communication = []
+        computation = []
+        with open(filepath) as f:
+            lines = f.readlines()
+            for line in lines:
+                # if "v=" in line:
+                #     sps = line.split(',')
+                #     # 按格式获取内容
+                #     # v = int(sps[0][3:])
+                #     # ccr = float(sps[2][10:])
+                if "Task#" in line:
+                    tmp = list(map(int, line.split("\t")[4:-1]))
+                    communication.append(tmp)
+                elif "T#" in line:
+                    tmp = list(map(int, line.split("\t")[2:-1]))
+                    computation.append(tmp)
+            input_list = [np.array(computation).shape[0], np.array(computation).shape[1], computation, communication]
+        return input_list
+
+
 if __name__ == '__main__':
-    for i in range(10):
-        arg = parser.parse_args()
-        dag = GenerateDag(arg)
-        dag.dag_construct("E:\\heterogeneous_simu_code\\data_gen\\", index=i)
+
+    # path = "E:\\heterogeneous_simu_code\\data_gen\\"
+    #
+    # for directory in os.listdir(path):
+    #     directory = os.path.join(path, directory)
+    #     for filename in os.listdir(directory):
+    #         print(ProcessDag.get_input_list(os.path.join(directory, filename)))
+
+    """
+    生成Dag图
+    """
+    # v_set = [20]#, 40, 60]
+    # CCR_set = [0.1]#, 0.5, 1.0, 5.0]
+    # alpha_set = [0.5]#, 1.0, 2.0]
+    # max_out_set = [4]#, 3, 4, 5]
+    # beta_set = [0.25]#, 0.25, 0.5, 0.75, 1.0]
+    #
+    # for v in v_set:
+    #     for ccr in CCR_set:
+    #         for alpha in alpha_set:
+    #             for max_out in max_out_set:
+    #                 for beta in beta_set:
+    #                     # 对应参数都生成10张Dag图
+    #                     for i in range(10):
+    #                         arg = parser.parse_args()
+    #                         dag = GenerateDag(_v=v, _alpha=alpha, _max_out=max_out, _beta=beta, _ccr=ccr, _p=4)
+    #                         dag.dag_construct("E:\\heterogeneous_simu_code\\data_gen\\", index=i)

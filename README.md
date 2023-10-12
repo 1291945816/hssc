@@ -11,11 +11,16 @@ introduction: **This is a task scheduling simulation platform for general hetero
 
 - [x] 分析网上的DAG生成代码，整理实现思路
 - [x] DAG任务的构建生成
-- [ ] DAG任务的解析
+- [x] DAG任务的解析
 
 #### 第二阶段
 
-> 实现各类经典的、新型的**启发式调度算法。**
+> 复现各类经典的、新型的**启发式调度算法。**
 
-- [ ] 实现HEFT算法
+|      算法       |                       论文                        |
+|:-------------:|:-----------------------------------------------:|
+| HEFT算法、CPOP算法 | [Performance-effective and low-complexity task scheduling for heterogeneous computing](https://ieeexplore.ieee.org/document/993206) |
+|       -       |                        -                        |
+
+
 
