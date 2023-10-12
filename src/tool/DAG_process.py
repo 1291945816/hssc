@@ -13,7 +13,7 @@ parser.add_argument('--v', default=10, type=int,
                     help="Number of tasks in the graph")
 parser.add_argument('--alpha', default=1, type=float,
                     help="Shape parameter of the graph")
-parser.add_argument('--max_out', default=2, type=int,
+parser.add_argument('--max_out', default=3, type=int,
                     help="Max out_degree of the node")
 parser.add_argument('--ccr', default=1.0, type=float,
                     help="Communication to computation ratio")
@@ -43,8 +43,8 @@ class GenerateDag:
         self.__dag_v_layer = []  # 每个顶点的dag列表
         self.__edges = []  # 顶点之间的边集
 
-        self.__in_degree = [0 for i in range(self.__v)]  # 入度
-        self.__out_degree = [0 for i in range(self.__v)]  # 出度
+        self.__in_degree = [0 for _ in range(self.__v)]  # 入度
+        self.__out_degree = [0 for _ in range(self.__v)]  # 出度
         self.__height = 0
         self.__width = []
 
@@ -254,7 +254,6 @@ class GenerateDag:
         f = open(file_path, mode='w')
 
         # 这里需要更新实际的V 考虑到有实际的 虚拟节点
-
         # 增加基本的描述信息
         f.write(f"Graph # {index} \n"
                 f"\tv={self.__nodes}, alpha={self.__alpha}, CC Ratio={self.__ccr}, Average Computational Cost={wDAG} \n")
