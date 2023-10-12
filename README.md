@@ -17,3 +17,5 @@ introduction: **This is a task scheduling simulation platform for general hetero
 
 > 实现各类经典的、新型的**启发式调度算法。**
 
+- [ ] 实现HEFT算法
+

@@ -31,6 +31,7 @@ class GenerateDag:
     def __init__(self, args):
         self.__avg_w_dag = None  # 整个图中的平均计算开销
         self.__v = args.v
+        self.__nodes = args.v  # 实际节点数目（用以构建文件名称）
         self.__alpha = args.alpha
         self.__max_out = args.max_out
         self.__ccr = args.ccr
@@ -44,6 +45,8 @@ class GenerateDag:
 
         self.__in_degree = [0 for i in range(self.__v)]  # 入度
         self.__out_degree = [0 for i in range(self.__v)]  # 出度
+        self.__height = 0
+        self.__width = []
 
         # todo 这些提前处理可能会存在一些问题
         # 最小值 取下界
@@ -179,32 +182,12 @@ class GenerateDag:
         :param max_value: DAG图的平均计算开销的最大值
         :return:
         """
+
         self.__dag_init()
         self.__edges_init()
 
         # 生成图的平均DAg
         wDAG = self.__set_randomly_avg_w_dag(min_value, max_value)
-
-        #
-        file_path = file_path \
-                    + "V_" + str(self.__v) \
-                    + "_Alpha_" + str(self.__alpha) \
-                    + "_Maxout_" + str(self.__max_out) \
-                    + "_CCR_" + str(self.__ccr) \
-                    + "_Beta_" + str(self.__beta) + "/"
-
-        # 创建目录
-        if not os.path.exists(file_path):
-            os.makedirs(file_path)
-        file_path += str(index) + ".txt"
-        f = open(file_path, mode='w')
-
-        # 这里需要更新实际的V 考虑到有实际的 虚拟节点
-
-        # 增加基本的描述信息
-
-        f.write(f"Graph # {index} \n "
-                f"v={self.__v}, alpha={self.__alpha}, CC Ratio={self.__ccr}, Average Computational Cost={wDAG} \n")
 
         # 节点之间的通信矩阵 -1 表示没有关系
         comm_v = np.array([[-1 for _ in range(self.__v)] for _ in range(self.__v)])  # v x v
@@ -252,12 +235,61 @@ class GenerateDag:
 
         # -1 表示处理器不处理这个任务
         if self.__created_start:
-            comp[0, :] = -1
+            comp[0, :] = 0
         if self.__created_end:
-            comp[self.__v - 1, :] = -1
+            comp[self.__v - 1, :] = 0
+
+        #
+        file_path = file_path \
+                    + "V_" + str(self.__nodes) \
+                    + "_Alpha_" + str(self.__alpha) \
+                    + "_Maxout_" + str(self.__max_out) \
+                    + "_CCR_" + str(self.__ccr) \
+                    + "_Beta_" + str(self.__beta) + "/"
+
+        # 创建目录
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
+        file_path += str(index) + ".txt"
+        f = open(file_path, mode='w')
+
+        # 这里需要更新实际的V 考虑到有实际的 虚拟节点
+
+        # 增加基本的描述信息
+        f.write(f"Graph # {index} \n"
+                f"\tv={self.__nodes}, alpha={self.__alpha}, CC Ratio={self.__ccr}, Average Computational Cost={wDAG} \n")
+        f.write(f"\tVirtual start node={self.__created_start}, Virtual end node={self.__created_end}\n")
+
+        f.write("\n#######\tcommunication matrix\t#######\n\n")
+        f.write("--- From / to ---\t")
+
+        # 表头
+        for i in range(self.__v):
+            f.write(f"#{i}\t")
+        f.write("\n")
+
+        for i in range(self.__v):
+            f.write(f"\tTask#{i}\t\t\t")
+            for j in range(self.__v):
+                f.write(f"{comm_v[i][j]}\t")
+            f.write("\n")
+
+        f.write("\n#######\tcomputation matrix\t#######\n\n")
+        f.write("---------\t")
+        for i in range(self.__p):
+            f.write(f"P{i + 1}\t")
+        f.write("\n")
+
+        for i in range(self.__v):
+            f.write(f"\tTask#{i}\t")
+            for j in range(self.__p):
+                f.write(f"{comp[i][j]}\t")
+            f.write("\n")
+        f.close()
 
 
 if __name__ == '__main__':
-    arg = parser.parse_args()
-    dag = GenerateDag(arg)
-    dag.dag_construct("E:\\heterogeneous_simu_code\\data_gen\\")
+    for i in range(10):
+        arg = parser.parse_args()
+        dag = GenerateDag(arg)
+        dag.dag_construct("E:\\heterogeneous_simu_code\\data_gen\\", index=i)
