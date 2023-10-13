@@ -45,7 +45,7 @@ class GenerateDag:
         self.__height = 0
         self.__width = []
 
-        # todo 这些提前处理可能会存在一些问题
+
         # 最小值 取下界
         mean_height = math.ceil(math.sqrt(self.__v) / self.__alpha)  # DAG Height
         mean_width = math.ceil(math.sqrt(self.__v) * self.__alpha)  # DAG Width
@@ -179,7 +179,7 @@ class GenerateDag:
         :param max_value: DAG图的平均计算开销的最大值
         :return:
         """
-
+        # print(10)
         self.__dag_init()
         self.__edges_init()
 
@@ -316,6 +316,7 @@ class ProcessDag:
 
 if __name__ == '__main__':
 
+
     # path = "E:\\heterogeneous_simu_code\\data_gen\\"
     #
     # for directory in os.listdir(path):
@@ -324,21 +325,23 @@ if __name__ == '__main__':
     #         print(ProcessDag.get_input_list(os.path.join(directory, filename)))
 
     """
-    生成Dag图
+    生成Dag图 
     """
-    # v_set = [20]#, 40, 60]
-    # CCR_set = [0.1]#, 0.5, 1.0, 5.0]
-    # alpha_set = [0.5]#, 1.0, 2.0]
-    # max_out_set = [4]#, 3, 4, 5]
-    # beta_set = [0.25]#, 0.25, 0.5, 0.75, 1.0]
-    #
-    # for v in v_set:
-    #     for ccr in CCR_set:
-    #         for alpha in alpha_set:
-    #             for max_out in max_out_set:
-    #                 for beta in beta_set:
-    #                     # 对应参数都生成10张Dag图
-    #                     for i in range(10):
-    #                         arg = parser.parse_args()
-    #                         dag = GenerateDag(_v=v, _alpha=alpha, _max_out=max_out, _beta=beta, _ccr=ccr, _p=4)
-    #                         dag.dag_construct("E:\\heterogeneous_simu_code\\data_gen\\", index=i)
+    # todo 生成10个节点存在一些问题
+    v_set = [10]#, 40, 60]
+    CCR_set = [0.1]#, 0.5, 1.0, 5.0]
+    alpha_set = [1.0]#, 1.0, 2.0]
+    max_out_set = [4]#, 3, 4, 5]
+    beta_set = [0.25]#, 0.25, 0.5, 0.75, 1.0]
+
+    for v in v_set:
+        for ccr in CCR_set:
+            for alpha in alpha_set:
+                for max_out in max_out_set:
+                    for beta in beta_set:
+                        # 对应参数都生成10张Dag图
+                        for i in range(10):
+                            arg = parser.parse_args()
+                            dag = GenerateDag(_v=v, _alpha=alpha, _max_out=max_out, _beta=beta, _ccr=ccr, _p=4)
+                            dag.dag_construct("E:\\heterogeneous_simu_code\\data_gen\\", index=i)
+                            print(11)
