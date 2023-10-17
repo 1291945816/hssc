@@ -158,11 +158,9 @@ class HEFT:
 
 if __name__ == "__main__":
     input_list = ProcessDag.get_input_list("E:\\heterogeneous_simu_code\\data_gen\\V_10_Alpha_1.0_Maxout_4_CCR_0"
-                                           ".1_Beta_0.25\\10.txt")
-    print(input_list)
+                                           ".1_Beta_0.25\\4.txt")
     heft = HEFT(input_list=input_list)
     print(heft)
-    print(heft.makespan)
 
 
     # from argparse import ArgumentParser
