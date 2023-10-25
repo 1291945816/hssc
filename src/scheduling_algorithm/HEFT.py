@@ -84,7 +84,6 @@ class HEFT:
                 curr_rank = max(curr_rank, self.graph[task.id][succ.id] + succ.rank)
         task.rank = task.avg_comp + curr_rank
 
-    # todo
     def __get_est(self, t, p):
         est = 0
         for pre in self.tasks:
@@ -157,8 +156,8 @@ class HEFT:
 
 
 if __name__ == "__main__":
-    input_list = ProcessDag.get_input_list("E:\\heterogeneous_simu_code\\data_gen\\V_10_Alpha_1.0_Maxout_4_CCR_0"
-                                           ".1_Beta_0.25\\4.txt")
+    input_list = ProcessDag.get_input_list("F:\\heterogeneous_simu_code\\data_gen\\V_10_Alpha_1.0_Maxout_4_CCR_0"
+                                           ".1_Beta_0.25\\11.txt")
     heft = HEFT(input_list=input_list)
     print(heft)
 

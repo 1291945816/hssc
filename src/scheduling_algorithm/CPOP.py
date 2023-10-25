@@ -1,4 +1,3 @@
-
 from sortedcontainers import SortedList
 import sys
 
@@ -56,7 +55,6 @@ class CPOP:
         self.__computeRank()
         self.__allocatProcessor()
         self.makespan = max([t.duration['end'] for t in self.tasks])
-
 
     def __computeRank(self):
         self.__computeRanku(self.tasks[0])
@@ -140,8 +138,6 @@ class CPOP:
     def __allocatProcessor(self):
 
         cp_set = self.__get_cp_set()
-        for task in cp_set:
-            print(task.id)
         cp_p = None
         s = float("inf")
 
@@ -155,7 +151,6 @@ class CPOP:
 
         # 采用入口节点初始化关键路径节点[降序排列]
         ready_list = SortedList([self.tasks[0]], key=lambda x: -x.rank)
-
 
         while len(ready_list) != 0:
 
@@ -209,13 +204,7 @@ class CPOP:
 
 
 if __name__ == "__main__":
-    input_list = ProcessDag.get_input_list("E:\\heterogeneous_simu_code\\data_gen\\V_10_Alpha_1.0_Maxout_4_CCR_0"
-                                           ".1_Beta_0.25\\4.txt")
+    input_list = ProcessDag.get_input_list("F:\\heterogeneous_simu_code\\data_gen\\V_10_Alpha_1.0_Maxout_4_CCR_0"
+                                           ".1_Beta_0.25\\11.txt")
     cpop = CPOP(input_list=input_list)
-
-    for p in cpop.processors:
-        print("P#{}".format(p.id))
-        for task in p.task_list:
-            print("task#{}: {} -> {}".format(task.id, task.duration['start'], task.duration['end']))
-
-    print(cpop.makespan)
+    print(cpop)

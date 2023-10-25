@@ -17,10 +17,11 @@ introduction: **This is a task scheduling simulation platform for general hetero
 
 > 复现各类经典的、新型的**启发式调度算法。**
 
-|      算法       |                       论文                        |
-|:-------------:|:-----------------------------------------------:|
-| HEFT算法、CPOP算法 | [Performance-effective and low-complexity task scheduling for heterogeneous computing](https://ieeexplore.ieee.org/document/993206) |
-|       -       |                        -                        |
+|      算法       |                                                                   论文                                                                    |
+|:-------------:|:---------------------------------------------------------------------------------------------------------------------------------------:|
+| HEFT算法、CPOP算法 |   [Performance-effective and low-complexity task scheduling for heterogeneous computing](https://ieeexplore.ieee.org/document/993206)   |
+|    PEFT算法     | [List Scheduling Algorithm for HeterogeneousSystems by an Optimistic Cost Table](https://ieeexplore.ieee.org/abstract/document/6471969) |
+|       -       |                                                                    -                                                                    |
 
 
 
