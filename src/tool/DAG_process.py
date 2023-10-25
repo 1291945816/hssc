@@ -343,5 +343,5 @@ if __name__ == '__main__':
                         for i in range(10):
                             arg = parser.parse_args()
                             dag = GenerateDag(_v=v, _alpha=alpha, _max_out=max_out, _beta=beta, _ccr=ccr, _p=4)
-                            dag.dag_construct("E:\\heterogeneous_simu_code\\data_gen\\", index=i)
+                            dag.dag_construct("F:\\heterogeneous_simu_code\\data_gen\\", index=i)
                             print(11)
