@@ -157,7 +157,7 @@ class HEFT:
 
 if __name__ == "__main__":
     input_list = ProcessDag.get_input_list("F:\\heterogeneous_simu_code\\data_gen\\V_10_Alpha_1.0_Maxout_4_CCR_0"
-                                           ".1_Beta_0.25\\11.txt")
+                                           ".1_Beta_0.25\\12.txt")
     heft = HEFT(input_list=input_list)
     print(heft)
 

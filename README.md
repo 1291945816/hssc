@@ -21,7 +21,8 @@ introduction: **This is a task scheduling simulation platform for general hetero
 |:-------------:|:---------------------------------------------------------------------------------------------------------------------------------------:|
 | HEFT算法、CPOP算法 |   [Performance-effective and low-complexity task scheduling for heterogeneous computing](https://ieeexplore.ieee.org/document/993206)   |
 |    PEFT算法     | [List Scheduling Algorithm for HeterogeneousSystems by an Optimistic Cost Table](https://ieeexplore.ieee.org/abstract/document/6471969) |
-|       -       |                                                                    -                                                                    |
+|    HCPT算法     |                                                                  [A Simple Scheduling Heuristic for Heterogeneous Computing Environments](https://ieeexplore.ieee.org/abstract/document/1267650)                                                                   |
+|-|                                                                    -                                                                    |
 
 
 
